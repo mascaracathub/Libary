@@ -2,7 +2,7 @@ local NameHub = loadstring(game:HttpGet("https://raw.githubusercontent.com/thiee
 
 -- Create window
 local Window = NameHub:Window({
-    Title = "Name Hub | By ower",
+    Title = "Astra X Hub | By _WT",
     Size = UDim2.new(0, 600, 0, 450)
 })
 
