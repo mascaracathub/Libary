@@ -1,140 +1,62 @@
-local FluentRedz = loadstring(game:HttpGet("https://raw.githubusercontent.com/thieengw9990/Libary/refs/heads/main/libary%20test"))()
+-- Example usage of NameHub GUI Library
+-- Tạo bởi: ower
 
-local window = FluentRedz:CreateWindow("My Awesome UI", {
-    Theme = "Dark",  -- "Dark" Or "Light"
-    Width = 500,     -- Setting
-    Height = 400     -- Setting
+local NameHub = loadstring(game:HttpGet("https://raw.githubusercontent.com/your-username/NameHub-GUI/main/NameHub.lua"))()
+
+-- Tạo window
+local Window = NameHub:Window({
+    Title = "Name Hub | By ower",
+    Size = UDim2.new(0, 600, 0, 450)
 })
 
--- Tạo các tab
-local mainTab = window:CreateTab("Main", nil)
-local playerTab = window:CreateTab("Player", nil)
-local settingsTab = window:CreateTab("Settings", nil)
+-- Tab 1: Main
+local MainTab = Window:Tab("Main")
 
--- Thêm controls vào tab chính
-local button = FluentRedz:CreateButton(mainTab, {
-    Title = "Teleport to Base",
-    Callback = function()
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 10, 0)
-        FluentRedz:Notify({
-            Title = "Teleported!",
-            Message = "You have been teleported to base.",
-            Type = "Success"
-        })
+-- Search Box
+local Search = Window:SearchBox(MainTab.Elements.ScrollFrame, "Search tabs...")
+Search.OnSearch(function(text)
+    print("Searching for:", text)
+    -- Thêm logic tìm kiếm của bạn ở đây
+end)
+
+-- Button
+Window:Button(MainTab.Elements.ScrollFrame, "Execute Script", function()
+    print("Button clicked!")
+    -- Thêm chức năng của bạn ở đây
+end)
+
+-- Toggle
+Window:Toggle(MainTab.Elements.ScrollFrame, "Enable Feature", false, function(state)
+    print("Toggle state:", state)
+end)
+
+-- Tab 2: Settings
+local SettingsTab = Window:Tab("Settings")
+
+-- Dropdown
+Window:Dropdown(SettingsTab.Elements.ScrollFrame, "Select Option", {"Option 1", "Option 2", "Option 3"}, "Option 1", function(selection)
+    print("Selected:", selection)
+end)
+
+-- Slider (X - thanh kéo)
+Window:Slider(SettingsTab.Elements.ScrollFrame, "Volume", 1, 10, 5, function(value)
+    print("Volume set to:", value)
+end)
+
+-- Thêm nhiều tab khác
+Window:Tab("Tab 3")
+Window:Tab("Tab 4")
+Window:Tab("Tab 5")
+Window:Tab("Tab 6")
+Window:Tab("Tab 7")
+Window:Tab("Tab 8")
+
+-- Hiển thị GUI
+Window:Show()
+
+-- Tạo toggle key (ví dụ: F5)
+game:GetService("UserInputService").InputBegan:Connect(function(input, processed)
+    if not processed and input.KeyCode == Enum.KeyCode.F5 then
+        Window:Toggle()
     end
-})
-
-local toggle = FluentRedz:CreateToggle(mainTab, {
-    Title = "God Mode",
-    Default = false,
-    Callback = function(value)
-        game.Players.LocalPlayer.Character.Humanoid.Health = value and math.huge or 100
-    end
-})
-
-local slider = FluentRedz:CreateSlider(mainTab, {
-    Title = "Walk Speed",
-    Min = 16,
-    Max = 200,
-    Default = 16,
-    Callback = function(value)
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
-    end
-})
-
--- Dropdown với tìm kiếm tích hợp
-local dropdown = FluentRedz:CreateDropdown(mainTab, {
-    Title = "Select Weapon",
-    Options = {
-        {Text = "Sword", Value = "sword"},
-        {Text = "Gun", Value = "gun"},
-        {Text = "Bow", Value = "bow"},
-        {Text = "Staff", Value = "staff"}
-    },
-    Default = "sword",
-    Callback = function(value)
-        print("Selected weapon:", value)
-    end
-})
-
--- Keybind để toggle UI
-local keybind = FluentRedz:CreateKeybind(mainTab, {
-    Title = "Toggle UI",
-    Default = Enum.KeyCode.RightControl,
-    Callback = function(key)
-        window:ToggleVisibility()
-    end
-})
-
--- Color picker
-local colorPicker = FluentRedz:CreateColorPicker(mainTab, {
-    Title = "ESP Color",
-    Default = Color3.new(1, 0, 0),
-    Callback = function(color)
-        print("Selected color:", color)
-    end
-})
-
--- Thêm label và divider
-FluentRedz:CreateLabel(mainTab, {
-    Text = "Player Settings",
-    TextSize = 16,
-    Bold = true
-})
-
-FluentRedz:CreateDivider(mainTab, {
-    Thickness = 2,
-    Color = Color3.new(0.5, 0.5, 0.5)
-})
-
--- Tooltip cho button
-FluentRedz:CreateTooltip(button._control.Instance, {
-    Title = "Teleport Button",
-    Text = "Click this button to teleport to the spawn point."
-})
-
--- Sử dụng tính năng tìm kiếm (tích hợp sẵn trong mỗi tab)
--- Chỉ cần gõ vào ô search ở đầu mỗi tab để lọc controls
-
--- Dialog example
-FluentRedz:CreateButton(mainTab, {
-    Title = "Show Dialog",
-    Style = "Warning",
-    Callback = function()
-        FluentRedz:Confirm({
-            Title = "Reset Settings",
-            Message = "Are you sure you want to reset all settings?",
-            Callback = function(confirmed)
-                if confirmed then
-                    FluentRedz:Notify({
-                        Title = "Settings Reset",
-                        Message = "All settings have been reset to default.",
-                        Type = "Success"
-                    })
-                end
-            end
-        })
-    end
-})
-
--- Theme editor
-FluentRedz:CreateButton(settingsTab, {
-    Title = "Open Theme Editor",
-    Callback = function()
-        FluentRedz:OpenThemeEditor()
-    end
-})
-
--- Performance monitoring
-FluentRedz:CreateButton(settingsTab, {
-    Title = "Show Stats",
-    Callback = function()
-        local stats = FluentRedz:GetPerformanceStats()
-        FluentRedz:Notify({
-            Title = "Performance Stats",
-            Message = string.format("FPS: %d\nMemory: %d KB\nWindows: %d", 
-                stats.FPS, stats.Memory, stats.Windows),
-            Type = "Info"
-        })
-    end
-})
+end)
