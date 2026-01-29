@@ -1,7 +1,7 @@
 -- Example usage of NameHub GUI Library
 -- Tạo bởi: ower
 
-local NameHub = loadstring(game:HttpGet("https://raw.githubusercontent.com/your-username/NameHub-GUI/main/NameHub.lua"))()
+local NameHub = loadstring(game:HttpGet("https://raw.githubusercontent.com/thieengw9990/Libary/refs/heads/main/Scriptmain.lua"))()
 
 -- Tạo window
 local Window = NameHub:Window({
