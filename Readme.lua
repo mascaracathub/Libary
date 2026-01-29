@@ -1,9 +1,6 @@
--- Example usage of NameHub GUI Library
--- Tạo bởi: ower
-
 local NameHub = loadstring(game:HttpGet("https://raw.githubusercontent.com/thieengw9990/Libary/refs/heads/main/Scriptmain.lua"))()
 
--- Tạo window
+-- Create window
 local Window = NameHub:Window({
     Title = "Name Hub | By ower",
     Size = UDim2.new(0, 600, 0, 450)
@@ -42,14 +39,6 @@ end)
 Window:Slider(SettingsTab.Elements.ScrollFrame, "Volume", 1, 10, 5, function(value)
     print("Volume set to:", value)
 end)
-
--- Thêm nhiều tab khác
-Window:Tab("Tab 3")
-Window:Tab("Tab 4")
-Window:Tab("Tab 5")
-Window:Tab("Tab 6")
-Window:Tab("Tab 7")
-Window:Tab("Tab 8")
 
 -- Hiển thị GUI
 Window:Show()
